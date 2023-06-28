@@ -1,20 +1,17 @@
-import requests
-from PyPDF2 import PdfReader
-import io
+from utils import get_previous_month_and_year, extract_most_recent_raleigh_water_data
 
 
-def extract_data():
-    response = requests.get(
-        "https://cityofraleigh0drupal.blob.core.usgovcloudapi.net/drupal-prod/COR25/FinishedWaterQualityReportMay23.pdf"
-    )
-    with io.BytesIO(response.content) as f:
-        pdf = PdfReader(f)
-        contents = pdf._get_page(0).extract_text()
-        print(contents)
+def format_extracted_data(list):
+    pass
 
 
 def main():
-    print(extract_data())
+    previous_month_name, current_year_end_digits = get_previous_month_and_year()
+    data = extract_most_recent_raleigh_water_data(
+        previous_month_name, current_year_end_digits
+    )
+    print(data)
+
 
 if __name__ == "__main__":
     main()
